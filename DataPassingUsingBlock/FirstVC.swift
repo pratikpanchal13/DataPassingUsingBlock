@@ -28,14 +28,22 @@ class FirstVC: UIViewController {
     @IBAction func btnClickMeOpen(_ sender: Any) {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let secondViewController = storyboard.instantiateViewController(withIdentifier: "SecondVC") as! SecondVC
-        self.present(secondViewController, animated: true, completion: nil)
+        let SecondVC = storyboard.instantiateViewController(withIdentifier: "SecondVC") as! SecondVC
         
-        secondViewController.invitedUsers = { selectedUsers, strStatus in
-            
-            print("data is \(selectedUsers) index is \(strStatus) ")
+        if let returnValue = UserDefaults.standard.object(forKey: "indexPath") as? Int {
+         
+            SecondVC.objFirstVC = returnValue
+        }
+        
+        SecondVC.invitedUsers = { selectedUsers, index in
+            print("data is \(selectedUsers)",index)
+            SecondVC.objFirstVC = index
             
         }
+        
+        self.present(SecondVC, animated: true, completion: nil)
+        
+        
     }
 
     /*
